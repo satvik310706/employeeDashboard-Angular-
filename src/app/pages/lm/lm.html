@@ -24,25 +24,23 @@
             <tbody>
                 @for (item of leaveList; track $index) {
                 <tr>
-                    <td>{{ item.leaveId }}</td>
-                    <td>{{ item.employeeId }}</td>
-                    <td>{{ item.leaveType }}</td>
-                    <td>{{ item.fromDate | date: 'dd-MM-yyyy' }}</td>
-                    <td>{{ item.toDate | date: 'dd-MM-yyyy' }}</td>
-                    <td>{{ item.noOfDays }}</td>
-                    <td>{{ item.details }}</td>
-
-                    <td>
+                    <td data-label="Leave ID">{{ item.leaveId }}</td>
+                    <td data-label="Employee ID">{{ item.employeeId }}</td>
+                    <td data-label="Leave Type">{{ item.leaveType }}</td>
+                    <td data-label="From Date">{{ item.fromDate | date: 'dd-MM-yyyy' }}</td>
+                    <td data-label="To Date">{{ item.toDate | date: 'dd-MM-yyyy' }}</td>
+                    <td data-label="No of Days">{{ item.noOfDays }}</td>
+                    <td data-label="Details">{{ item.details }}</td>
+                    <td data-label="Status">
                         <span [ngClass]="{
-              'status-approved': item.status === 'Approved',
-              'status-pending': item.status === 'Pending',
-              'status-rejected': item.status === 'Rejected'
-            }">
+          'status-approved': item.status === 'Approved',
+          'status-pending': item.status === 'Pending',
+          'status-rejected': item.status === 'Rejected'
+        }">
                             {{ item.status }}
                         </span>
                     </td>
-
-                    <td class="action-cell">
+                    <td data-label="Actions" class="action-cell">
                         <button class="approve-btn" [disabled]="item.status === 'Approved'"
                             (click)="approve(item.leaveId)">
                             Approve
@@ -55,6 +53,7 @@
                 </tr>
                 }
             </tbody>
+
         </table>
     </div>
 </div>
