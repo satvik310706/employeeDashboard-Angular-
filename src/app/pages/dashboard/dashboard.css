@@ -1,0 +1,220 @@
+.dashboard-container {
+  padding: 40px 20px;
+  background: #f4f7fc;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2d3436;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1e272e;
+  text-align: center;
+}
+
+.dashboard-welcome {
+  background: linear-gradient(to right, #f8fafc, #e2e8f0);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeUp 0.8s ease-out;
+  max-width: 100%;
+  margin: 30px auto;
+  color: #1e293b;
+  text-align: center;
+}
+
+.dashboard-intro {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #334155;
+}
+
+.dashboard-features {
+  list-style: none;
+  padding-left: 0;
+  margin: 25px auto;
+  max-width: 800px;
+  text-align: left;
+}
+
+.dashboard-features li {
+  font-size: 1.1rem;
+  margin: 12px 0;
+  padding-left: 24px;
+  position: relative;
+  color: #1e293b;
+  transition: transform 0.2s ease;
+}
+
+.dashboard-features li:hover {
+  transform: translateX(8px);
+}
+
+.dashboard-tip {
+  font-size: 1rem;
+  font-style: italic;
+  color: #475569;
+}
+
+.card-footer {
+  margin-top: 20px;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 10px;
+}
+
+.card-link {
+  text-decoration: none;
+  color: #3b82f6;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.card-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.dashboard-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-fixed {
+  flex: 1 1 calc(33.333% - 24px);
+  min-width: 280px;
+  max-width: 100%;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: #2d3436;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+}
+
+.employee-table thead {
+  background-color: #f0f4fa;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.employee-table tr:hover {
+  background-color: #f9fbfd;
+}
+
+.status-active {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-fixed {
+    flex: 1 1 48%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .dashboard-welcome {
+    padding: 20px;
+  }
+
+  .card-fixed {
+    flex: 1 1 100%;
+  }
+
+  .dashboard-intro, .dashboard-features li, .dashboard-tip {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 10px;
+  }
+
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .employee-table th,
+  .employee-table td {
+    font-size: 0.9rem;
+  }
+}

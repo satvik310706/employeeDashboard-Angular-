@@ -1,0 +1,13 @@
+<div class="container">
+    <aside class="sidebar">
+        <h2 class="title">{{ user }} ({{ roles }})</h2>
+        <nav class="nav" *ngFor="let item of userData; let i = index">
+            <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">{{ item.title }}</a>
+        </nav>
+        <button class="logout" (click)="logout()">Logout</button>
+    </aside>
+
+    <main class="content">
+        <router-outlet></router-outlet>
+    </main>
+</div>
