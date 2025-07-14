@@ -1,13 +1,18 @@
-<div class="container">
-    <aside class="sidebar">
-        <h2 class="title">{{ user }} ({{ roles }})</h2>
-        <nav class="nav" *ngFor="let item of userData; let i = index">
-            <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">{{ item.title }}</a>
+<div class="layout-container">
+    <header class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-user">{{ user }}</div>
+            <div class="navbar-role">({{ roles }})</div>
+        </div>
+        <nav class="navbar-menu">
+            <a class="navbar-link" *ngFor="let item of userData" [routerLink]="item.path" routerLinkActive="active">
+                {{ item.title }}
+            </a>
         </nav>
-        <button class="logout" (click)="logout()">Logout</button>
-    </aside>
+        <button class="navbar-logout" (click)="logout()">Logout</button>
+    </header>
 
-    <main class="content">
+    <main class="main-content">
         <router-outlet></router-outlet>
     </main>
 </div>

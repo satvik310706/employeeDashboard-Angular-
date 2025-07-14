@@ -5,6 +5,16 @@
         <p class="subtext">Approve or reject leave requests submitted by employees</p>
     </div>
 
+    <div class="filters">
+        <input type="text" [(ngModel)]="filters.employeeId" placeholder="Filter by Employee ID">
+        <select [(ngModel)]="filters.status">
+            <option value="">All Status</option>
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
     <div class="table-responsive">
         <table class="leave-table">
             <thead>
@@ -22,8 +32,7 @@
             </thead>
 
             <tbody>
-                @for (item of leaveList; track $index) {
-                <tr>
+                <tr *ngFor="let item of filteredLeaves(); let i = index; trackBy: trackByIndex">
                     <td data-label="Leave ID">{{ item.leaveId }}</td>
                     <td data-label="Employee ID">{{ item.employeeId }}</td>
                     <td data-label="Leave Type">{{ item.leaveType }}</td>
@@ -33,27 +42,21 @@
                     <td data-label="Details">{{ item.details }}</td>
                     <td data-label="Status">
                         <span [ngClass]="{
-          'status-approved': item.status === 'Approved',
-          'status-pending': item.status === 'Pending',
-          'status-rejected': item.status === 'Rejected'
-        }">
+              'status-approved': item.status === 'Approved',
+              'status-pending': item.status === 'Pending',
+              'status-rejected': item.status === 'Rejected'
+            }">
                             {{ item.status }}
                         </span>
                     </td>
                     <td data-label="Actions" class="action-cell">
                         <button class="approve-btn" [disabled]="item.status === 'Approved'"
-                            (click)="approve(item.leaveId)">
-                            Approve
-                        </button>
+                            (click)="approve(item.leaveId)">Approve</button>
                         <button class="reject-btn" [disabled]="item.status === 'Approved'"
-                            (click)="reject(item.leaveId)">
-                            Reject
-                        </button>
+                            (click)="reject(item.leaveId)">Reject</button>
                     </td>
                 </tr>
-                }
             </tbody>
-
         </table>
     </div>
 </div>

@@ -18,7 +18,7 @@ export interface EmployeeDetails {
     "deptName": string,
     "contactNo": string,
     "emailId": string,
-    "role": string
+    "role": string,
 }
 export class New {
     employeeId: number

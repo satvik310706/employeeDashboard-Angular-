@@ -1,25 +1,59 @@
+/* lm.css */
+body {
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .leave-container {
-  background: #f8f9fa;
-  padding: 30px;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
   border-radius: 16px;
-  animation: fadeIn 0.5s ease-in-out;
-  max-width: 100%;
-  overflow-x: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .header h2 {
-  font-size: 2.2rem;
-  color: #3f51b5;
-  margin-bottom: 6px;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
 }
+
 .subtext {
-  color: #555;
+  color: #7f8c8d;
   font-size: 1rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.filters input,
+.filters select {
+  padding: 0.6rem 1rem;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: border 0.3s ease;
+  min-width: 220px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: #3498db;
+  outline: none;
+  background: #fff;
 }
 
 .table-responsive {
@@ -28,139 +62,94 @@
 
 .leave-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+  border-collapse: collapse;
   min-width: 900px;
 }
 
-.leave-table thead {
-  background: linear-gradient(to right, #6c63ff, #8e7fff);
-  color: white;
+.leave-table thead th {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  border-bottom: 2px solid #bdc3c7;
 }
 
-.leave-table th, .leave-table td {
-  padding: 14px;
-  text-align: left;
-}
-
-.leave-table tbody tr {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
+.leave-table tbody td {
+  text-align: center;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #ecf0f1;
 }
 
 .leave-table tbody tr:hover {
-  transform: scale(1.01);
+  background-color: #f0f4f8;
+}
+
+.status-approved {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #e74c3c;
+  font-weight: bold;
 }
 
 .action-cell {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.approve-btn, .reject-btn {
-  padding: 10px 16px;
+.approve-btn,
+.reject-btn {
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 6px;
-  font-weight: bold;
   color: white;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  font-size: 0.95rem;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
 .approve-btn {
-  background: linear-gradient(to right, #00c853, #43a047);
+  background-color: #27ae60;
 }
+
 .reject-btn {
-  background: linear-gradient(to right, #d32f2f, #c62828);
+  background-color: #c0392b;
 }
 
 .approve-btn:hover:not(:disabled),
 .reject-btn:hover:not(:disabled) {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
 .approve-btn:disabled,
 .reject-btn:disabled {
-  background: #bdbdbd;
+  background-color: #bdc3c7;
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
-.status-approved {
-  color: #00c853;
-  font-weight: bold;
-}
-.status-pending {
-  color: #ff9800;
-  font-weight: bold;
-}
-.status-rejected {
-  color: #e53935;
-  font-weight: bold;
-}
-
-/* --- RESPONSIVE DESIGN FOR SMALL DEVICES --- */
-@media (max-width: 768px) {
-  .leave-table thead {
-    display: none;
+@media screen and (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .leave-table,
-  .leave-table tbody,
-  .leave-table tr,
-  .leave-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .leave-table tr {
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    padding: 15px;
-    background-color: #fff;
-  }
-
-  .leave-table td {
-    padding: 12px 10px 12px 40%;
-    text-align: left;
-    position: relative;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  .leave-table td:last-child {
-    border-bottom: none;
-  }
-
-  .leave-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 16px;
-    top: 12px;
-    font-weight: bold;
-    color: #3f51b5;
+  .leave-table {
+    min-width: unset;
     font-size: 0.9rem;
   }
 
   .action-cell {
-    justify-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .approve-btn,
-  .reject-btn {
-    width: 48%;
-    font-size: 0.9rem;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 }

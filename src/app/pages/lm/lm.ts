@@ -1,7 +1,8 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lm',
@@ -12,7 +13,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class Lm implements OnInit {
   leaveList: any[] = [];
+  filters = {
+    employeeId: '',
+    status: ''
+  };
+
   http = inject(HttpClient);
+  cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.get();
@@ -27,6 +34,8 @@ export class Lm implements OnInit {
             status: leave.isApproved === true ? 'Approved' :
               leave.isApproved === false ? 'Rejected' : 'Pending'
           }));
+          this.leaveList = [...this.leaveList]; // Force refresh
+          this.cdr.detectChanges();             // Trigger UI update
         } else {
           alert("Couldn't fetch data: " + res.message);
         }
@@ -36,30 +45,44 @@ export class Lm implements OnInit {
   }
 
   approve(id: number) {
-    this.http.get(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/ApproveLeave?id=${id}`).subscribe({
-      next: (res: any) => {
-        if (res.result) {
-          alert("Approved");
-          this.get();
-        } else {
-          alert(res.message);
-        }
-      },
-      error: err => alert(err.message)
-    });
+    this.http.get(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/ApproveLeave?id=${id}`)
+      .pipe(finalize(() => this.get()))
+      .subscribe({
+        next: (res: any) => {
+          if (res.result) {
+            alert("Approved");
+          } else {
+            alert(res.message);
+          }
+        },
+        error: err => alert(err.message)
+      });
   }
 
   reject(id: number) {
-    this.http.get(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/RejectLeave?id=${id}`).subscribe({
-      next: (res: any) => {
-        if (res.result) {
-          alert("Rejected");
-          this.get();
-        } else {
-          alert(res.message);
-        }
-      },
-      error: err => alert(err.message)
+    this.http.get(`https://freeapi.miniprojectideas.com/api/EmployeeLeave/RejectLeave?id=${id}`)
+      .pipe(finalize(() => this.get()))
+      .subscribe({
+        next: (res: any) => {
+          if (res.result) {
+            alert("Rejected");
+          } else {
+            alert(res.message);
+          }
+        },
+        error: err => alert(err.message)
+      });
+  }
+
+  filteredLeaves() {
+    return this.leaveList.filter(item => {
+      const matchEmployee = this.filters.employeeId === '' || item.employeeId.toString().includes(this.filters.employeeId);
+      const matchStatus = this.filters.status === '' || item.status === this.filters.status;
+      return matchEmployee && matchStatus;
     });
+  }
+
+  trackByIndex(index: number, item: any) {
+    return index;
   }
 }

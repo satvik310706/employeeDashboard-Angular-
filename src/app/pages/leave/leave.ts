@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Employees } from '../services/employee';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -13,6 +13,7 @@ import { flatMap } from 'rxjs';
 export class Leave implements OnInit {
   leaveList: any[] = [];
   showForm: boolean = false;
+  cdr = inject(ChangeDetectorRef);
   currentTabname: string = 'myLeave';
   leaveForm: FormGroup = new FormGroup({
     leaveId: new FormControl(0),
@@ -44,7 +45,8 @@ export class Leave implements OnInit {
     }
     this.master.getl(empId).subscribe({
       next: (res: any) => {
-        this.leaveList = res.data;
+        this.leaveList = [...res.data];
+        this.cdr.detectChanges();
       }
     })
   }
