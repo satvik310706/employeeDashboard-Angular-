@@ -113,15 +113,22 @@ export class Employee implements OnInit {
     this.master.delete(id).subscribe({
       next: (res: any) => {
         if (res.result) {
-          alert(res.message || "Deleted");
           this.emps = this.emps.filter(e => e.employeeId !== id);
           this.emp = this.emp.filter(e => e.employeeId !== id);
           this.cdr.detectChanges();
         } else {
-          alert("Delete failed: " + res.message);
+          this.emps = this.emps.filter(e => e.employeeId !== id);
+          this.emp = this.emp.filter(e => e.employeeId !== id);
+          this.cdr.detectChanges();
+          console.log(res.message)
         }
       },
-      error: (err: any) => alert("API error: " + err.message)
+      error: (err: any) => {
+        this.emps = this.emps.filter(e => e.employeeId !== id);
+        this.emp = this.emp.filter(e => e.employeeId !== id);
+        this.cdr.detectChanges();
+        console.log(err.message)
+      }
     });
   }
 
