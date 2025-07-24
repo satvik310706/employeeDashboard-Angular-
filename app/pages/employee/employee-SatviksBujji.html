@@ -1,0 +1,118 @@
+<div class="employee-container">
+    <div class="header">
+        <h2>Employee Management</h2>
+        <button class="add-button" (click)="show()">Add Employee</button>
+    </div>
+
+    <!-- Add Employee Form -->
+    <div *ngIf="showAddForm" class="add-employee-form">
+        <h3>{{ newEmp.employeeId ? 'Edit Employee' : 'Add New Employee' }}</h3>
+        <form class="form-grid" #form="ngForm">
+            <div class="form-group">
+                <label>Employee Name</label>
+                <input type="text" #uname="ngModel" [(ngModel)]="newEmp.employeeName" name="employeeName" required />
+                <small class="text-danger" *ngIf="uname.errors?.['required'] && uname.touched">This is required</small>
+            </div>
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="text" #number="ngModel" [(ngModel)]="newEmp.contactNo" name="contactNo" required />
+                <small class="text-danger" *ngIf="number.errors?.['required'] && number.touched">This is
+                    required</small>
+            </div>
+            <div class="form-group">
+                <label>Email ID</label>
+                <input type="email" #email="ngModel" [(ngModel)]="newEmp.emailId" name="emailId" required />
+                <small class="text-danger" *ngIf="email.errors?.['required'] && email.touched">This is required</small>
+            </div>
+            <div class="form-group">
+                <label for="deptId">Department</label>
+                <select id="deptId" [(ngModel)]="newEmp.deptId" #dep="ngModel" name="deptId" required>
+                    <option [ngValue]="0" disabled>Select Department</option>
+                    <option *ngFor="let dept of depsList$ | async" [ngValue]="dept.deptId">{{ dept.deptName }}</option>
+                </select>
+                <small class="text-danger" *ngIf="dep.errors?.['required'] && dep.touched">This is required</small>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" #pass="ngModel" [(ngModel)]="newEmp.password" name="password" required />
+                <small class="text-danger" *ngIf="pass.errors?.['required'] && pass.touched">This is required</small>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select [(ngModel)]="newEmp.gender" #gen="ngModel" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <small class="text-danger" *ngIf="gen.errors?.['required'] && gen.touched">This is required</small>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" [(ngModel)]="newEmp.role" #role="ngModel" name="role" required>
+                    <option value="" disabled>Select Role</option>
+                    <option *ngFor="let role of roleList$ | async" [value]="role">{{ role }}</option>
+                </select>
+                <small class="text-danger" *ngIf="role.errors?.['required'] && role.touched">This is required</small>
+            </div>
+            <div class="form-actions full-width">
+                <button *ngIf="!newEmp.employeeId" type="submit" class="submit-btn" [disabled]="form.invalid"
+                    (click)="submitForm()">Submit</button>
+                <button *ngIf="newEmp.employeeId" type="submit" class="btn btn-secondary" [disabled]="form.invalid"
+                    (click)="put()">Update</button>
+                <button type="button" class="cancel-btn" (click)="closeForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <select [(ngModel)]="selectedDept" (change)="applyFilters()" class="filter-select">
+            <option value="">All Departments</option>
+            <option *ngFor="let d of uniqueDepartments" [value]="d">{{ d }}</option>
+        </select>
+        <select [(ngModel)]="selectedRole" (change)="applyFilters()" class="filter-select">
+            <option value="">All Roles</option>
+            <option *ngFor="let r of uniqueRoles" [value]="r">{{ r }}</option>
+        </select>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+        <input type="text" name="search" placeholder="Search by employee name..." [(ngModel)]="search"
+            class="search-input" />
+        <button class="search-button" (click)="filtr()">Search</button>
+    </div>
+
+    <h3 class="section-title">Employee List</h3>
+    <div class="table-wrapper">
+        <table class="employee-table">
+            <thead>
+
+                <th>EmpId</th>
+                <th>EmployeeName</th>
+                <th>Email</th>
+                <th>ContactNo</th>
+                <th>DeptId</th>
+                <th>DeptName</th>
+                <th>Role</th>
+                <th>ACTIONS</th>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let emp of emps">
+                    <td data-label="employeeId">{{ emp.employeeId }}</td>
+                    <td data-label="employeeName">{{ emp.employeeName }}</td>
+                    <td data-label="emailId">{{ emp.emailId }}</td>
+                    <td data-label="contactNo">{{ emp.contactNo }}</td>
+                    <td data-label="deptId">{{ emp.deptId}}</td>
+                    <td data-label="deptName">{{ emp.deptName }}</td>
+                    <td data-label="role">{{ emp.role }}</td>
+                    <td data-label="actions" class="action-buttons">
+                        <span class="action edit" (click)="edit(emp)">Edit</span>
+                        <span class="action delete" (click)="delete(emp.employeeId)">Delete</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

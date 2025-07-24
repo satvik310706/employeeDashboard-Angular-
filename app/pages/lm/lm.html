@@ -1,0 +1,60 @@
+<!-- lm.html -->
+<div class="leave-container">
+    <div class="header">
+        <h2>Leave Management</h2>
+        <p class="subtext">Approve or reject leave requests submitted by employees</p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="leave-table">
+            <thead>
+                <tr>
+                    <th>Leave ID</th>
+                    <th>Employee ID</th>
+                    <th>Leave Type</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>No of Days</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (item of leaveList; track $index) {
+                <tr>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ item.toDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td>{{ item.details }}</td>
+
+                    <td>
+                        <span [ngClass]="{
+              'status-approved': item.status === 'Approved',
+              'status-pending': item.status === 'Pending',
+              'status-rejected': item.status === 'Rejected'
+            }">
+                            {{ item.status }}
+                        </span>
+                    </td>
+
+                    <td class="action-cell">
+                        <button class="approve-btn" [disabled]="item.status === 'Approved'"
+                            (click)="approve(item.leaveId)">
+                            Approve
+                        </button>
+                        <button class="reject-btn" [disabled]="item.status === 'Approved'"
+                            (click)="reject(item.leaveId)">
+                            Reject
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

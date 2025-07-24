@@ -1,0 +1,141 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.leave-container {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 16px;
+  animation: fadeIn 0.5s ease-in-out;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 2rem;
+  color: #3f51b5;
+  margin-bottom: 6px;
+}
+.subtext {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.leave-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+  min-width: 900px;
+}
+
+.leave-table thead {
+  background: linear-gradient(to right, #6c63ff, #8e7fff);
+  color: white;
+}
+
+.leave-table th, .leave-table td {
+  padding: 14px;
+  text-align: left;
+}
+
+.leave-table tbody tr {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.leave-table tbody tr:hover {
+  transform: scale(1.01);
+}
+
+.action-cell {
+  display: flex;
+  gap: 10px;
+}
+
+.approve-btn, .reject-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.approve-btn {
+  background: linear-gradient(to right, #00c853, #43a047);
+}
+.reject-btn {
+  background: linear-gradient(to right, #d32f2f, #c62828);
+}
+
+.approve-btn:hover:not(:disabled),
+.reject-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.approve-btn:disabled,
+.reject-btn:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.status-approved {
+  color: #00c853;
+  font-weight: bold;
+}
+.status-pending {
+  color: #ff9800;
+  font-weight: bold;
+}
+.status-rejected {
+  color: #e53935;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .leave-table thead {
+    display: none;
+  }
+
+  .leave-table, .leave-table tbody, .leave-table tr, .leave-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .leave-table tr {
+    margin-bottom: 15px;
+  }
+
+  .leave-table td {
+    padding: 10px;
+    text-align: right;
+    position: relative;
+  }
+
+  .leave-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+}

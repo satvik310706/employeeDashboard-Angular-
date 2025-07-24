@@ -1,0 +1,37 @@
+<div class="container">
+    <h3 class="section-title">Employee List</h3>
+
+    <div class="search-container">
+        <input type="text" name="search" placeholder="Search by name..." [(ngModel)]="search" class="search-input" />
+        <button class="search-button" (click)="filtr()">Search</button>
+        <button class="sort-button" (click)="sortBy('employeeName')">Sort by Name</button>
+        <button class="sort-button" (click)="sortBy('employeeId')">Sort by ID</button>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Dept ID</th>
+                    <th>Dept Name</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let emp of emp">
+                    <td>{{ emp.employeeId }}</td>
+                    <td>{{ emp.employeeName }}</td>
+                    <td>{{ emp.emailId }}</td>
+                    <td>{{ emp.contactNo }}</td>
+                    <td>{{ emp.deptId }}</td>
+                    <td>{{ emp.deptName }}</td>
+                    <td>{{ emp.role }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

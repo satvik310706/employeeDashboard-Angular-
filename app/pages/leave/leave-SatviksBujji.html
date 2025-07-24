@@ -1,0 +1,133 @@
+<div class="leave-container">
+    <div class="header">
+        <h2>Leave Requests</h2>
+        <button class="add-leave-button" (click)="shoForm()">+ Add Leave</button>
+    </div>
+
+    <!-- Modal Form -->
+    <div class="modal" *ngIf="showForm">
+        <div class="modal-content">
+            <span class="close" (click)="closeForm()">&times;</span>
+            <h3>Add Leave Request</h3>
+
+            <form [formGroup]="leaveForm">
+                <label>Leave Type</label>
+                <select formControlName="leaveType">
+                    <option value="Sick Leave">Sick Leave</option>
+                    <option value="Annual Leave">Annual Leave</option>
+                    <option value="Personal Leave">Personal Leave</option>
+                </select>
+
+                <label>From Date</label>
+                <input type="date" formControlName="fromDate" />
+
+                <label>To Date</label>
+                <input type="date" formControlName="toDate" />
+
+                <label>Number of Days</label>
+                <input type="number" formControlName="noOfDays" />
+
+                <label>Details</label>
+                <textarea formControlName="details"></textarea>
+
+                <button type="button" (click)="submitLeaveRequest()" class="btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab" [ngClass]="{ active: currentTabname === 'myLeave' }" (click)="changeTab('myLeave')">My
+            Leaves</button>
+        <button class="tab" [ngClass]="{ active: currentTabname === 'Pending' }"
+            (click)="changeTab('Pending')">Pending</button>
+        <button class="tab" [ngClass]="{ active: currentTabname === 'approved' }"
+            (click)="changeTab('approved')">Approved</button>
+        <button class="tab" [ngClass]="{ active: currentTabname === 'rejected' }"
+            (click)="changeTab('rejected')">Rejected</button>
+    </div>
+
+    <h4 class="sub-heading">{{ currentTabname }}</h4>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+        <table class="leave-table">
+            <thead>
+                <tr>
+                    <th>Leave ID</th>
+                    <th>Employee ID</th>
+                    <th>Leave Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>No. of Days</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="currentTabname === 'approved'">
+                @for (item of leaveList; track $index) {
+                @if (item.isApproved === true) {
+                <tr>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.toDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td><span class="badge approved">Approved</span></td>
+                </tr>
+                }
+                }
+            </tbody>
+
+            <tbody *ngIf="currentTabname === 'Pending'">
+                @for (item of leaveList; track $index) {
+                @if (item.isApproved == null) {
+                <tr>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.toDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td><span class="badge pending">Pending</span></td>
+                </tr>
+                }
+                }
+            </tbody>
+
+            <tbody *ngIf="currentTabname === 'rejected'">
+                @for (item of leaveList; track $index) {
+                @if (item.isApproved === false) {
+                <tr>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.toDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td><span class="badge rejected">Rejected</span></td>
+                </tr>
+                }
+                }
+            </tbody>
+
+            <tbody *ngIf="currentTabname === 'myLeave'">
+                @for (item of leaveList; track $index) {
+                <tr>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.toDate | date: "dd-MM-yyyy" }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td>
+                        <span *ngIf="item.isApproved === true" class="badge approved">Approved</span>
+                        <span *ngIf="item.isApproved == null" class="badge pending">Pending</span>
+                        <span *ngIf="item.isApproved === false" class="badge rejected">Rejected</span>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
