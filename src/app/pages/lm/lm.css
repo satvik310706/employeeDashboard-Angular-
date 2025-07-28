@@ -1,7 +1,6 @@
-/* lm.css */
 body {
-  background-color: #f7f9fc;
   font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
   margin: 0;
   padding: 0;
 }
@@ -9,21 +8,27 @@ body {
 .leave-container {
   max-width: 1200px;
   margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .header h2 {
-  font-size: 2rem;
   color: #2c3e50;
-  margin-bottom: 0.5rem;
+  font-size: 2.4rem;
+  margin-bottom: 0.3rem;
 }
 
 .subtext {
@@ -35,121 +40,163 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: flex-start;
   margin-bottom: 1.5rem;
+  justify-content: space-between;
 }
 
 .filters input,
 .filters select {
-  padding: 0.6rem 1rem;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  background: #fafafa;
-  transition: border 0.3s ease;
-  min-width: 220px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #dcdde1;
+  background: #f9f9f9;
+  font-size: 15px;
+  transition: all 0.3s ease;
 }
 
 .filters input:focus,
 .filters select:focus {
   border-color: #3498db;
-  outline: none;
-  background: #fff;
+  background: #ffffff;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.4);
 }
 
-.table-responsive {
+.table-wrapper {
   overflow-x: auto;
+  border-radius: 12px;
 }
 
 .leave-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 900px;
+  min-width: 960px;
 }
 
 .leave-table thead th {
   background-color: #ecf0f1;
-  color: #2c3e50;
+  padding: 1rem;
   text-align: center;
-  padding: 0.75rem 1rem;
   font-weight: bold;
+  color: #2c3e50;
   border-bottom: 2px solid #bdc3c7;
 }
 
 .leave-table tbody td {
+  padding: 0.9rem;
   text-align: center;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid #eee;
 }
 
 .leave-table tbody tr:hover {
-  background-color: #f0f4f8;
+  background-color: #f1f6fb;
+  transition: background-color 0.2s ease-in;
 }
 
-.status-approved {
-  color: #2ecc71;
-  font-weight: bold;
+.badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
 }
 
-.status-pending {
-  color: #f39c12;
-  font-weight: bold;
+.badge-success {
+  background-color: #eafaf1;
+  color: #27ae60;
 }
 
-.status-rejected {
+.badge-danger {
+  background-color: #fdecea;
   color: #e74c3c;
-  font-weight: bold;
+}
+
+.badge-pending {
+  background-color: #fff3cd;
+  color: #f39c12;
 }
 
 .action-cell {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .approve-btn,
 .reject-btn {
-  padding: 0.5rem 1rem;
+  padding: 8px 14px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
+  font-weight: 600;
   color: white;
-  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.3s;
 }
 
 .approve-btn {
-  background-color: #27ae60;
+  background-color: #2ecc71;
 }
 
 .reject-btn {
-  background-color: #c0392b;
+  background-color: #e74c3c;
 }
 
 .approve-btn:hover:not(:disabled),
 .reject-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .approve-btn:disabled,
 .reject-btn:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .filters {
     flex-direction: column;
-    align-items: stretch;
   }
 
   .leave-table {
-    min-width: unset;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .action-cell {
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.4rem;
+  }
+
+  .leave-table thead {
+    display: none;
+  }
+
+  .leave-table, .leave-table tbody, .leave-table tr, .leave-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .leave-table tr {
+    margin-bottom: 1rem;
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .leave-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .leave-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    padding-left: 1rem;
+    font-weight: bold;
+    text-align: left;
   }
 }

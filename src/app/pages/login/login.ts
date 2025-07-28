@@ -3,10 +3,11 @@ import { LoginModel } from '../model/employee.model';
 import { FormsModule } from '@angular/forms';
 import { Employees } from '../services/employee';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterLink, RouterModule],
+  imports: [FormsModule, CommonModule, RouterLink, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

@@ -1,22 +1,28 @@
 <div class="login-wrapper">
     <div class="login-box">
         <h2 class="login-title">Employee Login</h2>
-        <form class="login-form">
-            <label for="email" class="login-label">Email ID</label>
-            <input type="email" id="email" class="login-input" placeholder="Enter your email" name="email"
-                #uname="ngModel" [(ngModel)]="loginObj.emailId" required />
-            @if (uname.errors?.['required'] && uname.touched) {
-            <small class="text-danger">This is required</small>
-            }
+        <form class="login-form" #f="ngForm" (ngSubmit)="login()">
+            <!-- Email Field -->
+            <div class="form-group">
+                <input type="email" id="email" class="login-input floating-input" name="email"
+                    [(ngModel)]="loginObj.emailId" required #uname="ngModel" />
+                <label for="email" class="floating-label">Email ID</label>
+                <span class="text-danger" *ngIf="uname.errors?.['required'] && uname.touched">
+                    * Email is required
+                </span>
+            </div>
 
-            <label for="password" class="login-label">Password</label>
-            <input type="password" id="password" class="login-input" placeholder="Enter your password" name="password"
-                #pas="ngModel" [(ngModel)]="loginObj.password" required />
-            @if (pas.errors?.['required'] && pas.touched) {
-            <small class="text-danger">This is required</small>
-            }
+            <!-- Password Field -->
+            <div class="form-group">
+                <input type="password" id="password" class="login-input floating-input" name="password"
+                    [(ngModel)]="loginObj.password" required #pas="ngModel" />
+                <label for="password" class="floating-label">Password</label>
+                <span class="text-danger" *ngIf="pas.errors?.['required'] && pas.touched">
+                    * Password is required
+                </span>
+            </div>
 
-            <button type="submit" (click)="login()" class="login-button">Login</button>
+            <button type="submit" class="login-button">Login</button>
         </form>
 
         <div class="signup-redirect">
@@ -25,4 +31,3 @@
         </div>
     </div>
 </div>
-<router-outlet></router-outlet>

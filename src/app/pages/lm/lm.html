@@ -1,12 +1,11 @@
-<!-- lm.html -->
 <div class="leave-container">
     <div class="header">
         <h2>Leave Management</h2>
-        <p class="subtext">Approve or reject leave requests submitted by employees</p>
+        <p class="subtext">Manage employee leave requests seamlessly</p>
     </div>
 
     <div class="filters">
-        <input type="text" [(ngModel)]="filters.employeeId" placeholder="Filter by Employee ID">
+        <input type="text" [(ngModel)]="filters.employeeId" placeholder="🔍 Filter by Employee ID" />
         <select [(ngModel)]="filters.status">
             <option value="">All Status</option>
             <option value="Approved">Approved</option>
@@ -15,45 +14,42 @@
         </select>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-wrapper">
         <table class="leave-table">
             <thead>
                 <tr>
                     <th>Leave ID</th>
                     <th>Employee ID</th>
                     <th>Leave Type</th>
-                    <th>From Date</th>
-                    <th>To Date</th>
-                    <th>No of Days</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Days</th>
                     <th>Details</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr *ngFor="let item of filteredLeaves(); let i = index; trackBy: trackByIndex">
-                    <td data-label="Leave ID">{{ item.leaveId }}</td>
-                    <td data-label="Employee ID">{{ item.employeeId }}</td>
-                    <td data-label="Leave Type">{{ item.leaveType }}</td>
-                    <td data-label="From Date">{{ item.fromDate | date: 'dd-MM-yyyy' }}</td>
-                    <td data-label="To Date">{{ item.toDate | date: 'dd-MM-yyyy' }}</td>
-                    <td data-label="No of Days">{{ item.noOfDays }}</td>
-                    <td data-label="Details">{{ item.details }}</td>
-                    <td data-label="Status">
-                        <span [ngClass]="{
-              'status-approved': item.status === 'Approved',
-              'status-pending': item.status === 'Pending',
-              'status-rejected': item.status === 'Rejected'
-            }">
-                            {{ item.status }}
-                        </span>
+                    <td>{{ item.leaveId }}</td>
+                    <td>{{ item.employeeId }}</td>
+                    <td>{{ item.leaveType }}</td>
+                    <td>{{ item.fromDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ item.toDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ item.noOfDays }}</td>
+                    <td>{{ item.details }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+              'badge-success': item.status === 'Approved',
+              'badge-pending': item.status === 'Pending',
+              'badge-danger': item.status === 'Rejected'
+            }">{{ item.status }}</span>
                     </td>
-                    <td data-label="Actions" class="action-cell">
+                    <td class="action-cell">
                         <button class="approve-btn" [disabled]="item.status === 'Approved'"
-                            (click)="approve(item.leaveId)">Approve</button>
+                            (click)="approve(item.leaveId)">✔ Approve</button>
                         <button class="reject-btn" [disabled]="item.status === 'Approved'"
-                            (click)="reject(item.leaveId)">Reject</button>
+                            (click)="reject(item.leaveId)">✘ Reject</button>
                     </td>
                 </tr>
             </tbody>
