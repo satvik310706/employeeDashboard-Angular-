@@ -1,0 +1,300 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #222;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+/* Dashboard Title */
+.dashboard-title {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.8rem;
+    font-weight: 800;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Welcome Section */
+.dashboard-welcome {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.dashboard-welcome .dashboard-title {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    text-shadow: none;
+}
+
+.dashboard-intro {
+    font-size: 1.15rem;
+    color: #444;
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.8;
+}
+
+/* Features Grid */
+.dashboard-features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-features li {
+    background: linear-gradient(145deg, #f4f4f4, #eaeaea);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border-left: 6px solid #667eea;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-features li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    border-left-color: #764ba2;
+}
+
+/* Dashboard Tip */
+.dashboard-tip {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Link Button */
+.card-footer {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.card-link {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-link:hover {
+    background: #fff;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    color: #764ba2;
+}
+
+/* Dashboard Row */
+.dashboard-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Card Styles */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.7s ease-out;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1.2rem;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 0.5rem;
+    position: relative;
+}
+
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* List inside card */
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    background: #f7f7f7;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 10px;
+    border-left: 5px solid #667eea;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.list-item:hover {
+    background: #ececec;
+    transform: translateX(6px);
+    border-left-color: #764ba2;
+}
+
+/* Table Section */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.employee-table thead {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: #fff;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 1rem;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.employee-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1.2rem;
+    }
+    .dashboard-title {
+        font-size: 2.2rem;
+    }
+    .dashboard-welcome {
+        padding: 2rem;
+    }
+    .dashboard-features {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-row {
+        grid-template-columns: 1fr;
+    }
+    .card-title {
+        font-size: 1.3rem;
+    }
+    .list-item {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-title {
+        font-size: 1.8rem;
+    }
+    .dashboard-welcome {
+        padding: 1.5rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+    .employee-table th,
+    .employee-table td {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+}
+
+/* Print */
+@media print {
+    body {
+        background: white;
+    }
+    .dashboard-container,
+    .card,
+    .dashboard-welcome {
+        background: white;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    .card-link {
+        display: none;
+    }
+}

@@ -1,0 +1,18 @@
+<div class="layout-container">
+    <header class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-user">{{ user }}</div>
+            <div class="navbar-role">({{ roles }})</div>
+        </div>
+        <nav class="navbar-menu">
+            <a class="navbar-link" *ngFor="let item of userData" [routerLink]="item.path" routerLinkActive="active">
+                {{ item.title }}
+            </a>
+        </nav>
+        <button class="navbar-logout" (click)="logout()">Logout</button>
+    </header>
+
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

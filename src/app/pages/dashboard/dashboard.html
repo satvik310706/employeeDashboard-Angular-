@@ -1,0 +1,69 @@
+<div class="dashboard-container">
+    <h2 class="dashboard-title">Dashboard</h2>
+
+    <div class="dashboard-welcome">
+        <h1 class="dashboard-title">Welcome to Your Company Dashboard {{user}}. 👋</h1>
+        <p class="dashboard-intro">
+            This is your central hub for everything that keeps your organization running smoothly.
+        </p>
+
+        <ul class="dashboard-features">
+            <li>👥 View and manage employees across different departments.</li>
+            <li>🏢 Track roles, departments, and hierarchies with clarity.</li>
+            <li>🗂️ Access employee profiles, roles, leaves, and attendance.</li>
+            <li>📊 Get insights into department-wise performance and team structure.</li>
+            <li>🔒 Manage user permissions, logins, and access levels securely.</li>
+            <li>💼 Monitor HR data, recruitment status, and internal communications.</li>
+        </ul>
+
+        <p class="dashboard-tip">
+            Need help? Use the navigation menu to explore various sections. Everything you need is just a click away.
+        </p>
+    </div>
+
+    <div class="card-footer">
+        <a (click)="show()" class="card-link">Click to see all details →</a>
+    </div>
+
+    <div class="dashboard-row" *ngIf="iss">
+        <!-- Employee Roles -->
+        <div class="card card-fixed">
+            <h3 class="card-title">Employee Roles</h3>
+            <ul class="list">
+                <li class="list-item" *ngFor="let role of roles$ | async">{{ role }}</li>
+            </ul>
+        </div>
+
+        <!-- Departments -->
+        <div class="card card-fixed">
+            <h3 class="card-title">Departments</h3>
+            <ul class="list">
+                <li class="list-item" *ngFor="let dept of departments | async">{{ dept.deptName }}</li>
+            </ul>
+        </div>
+
+        <!-- Employees -->
+        <div class="card card-fixed">
+            <h3 class="card-title">Employees</h3>
+            <div class="table-wrapper">
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let emp of employees">
+                            <td>{{ emp.employeeName }}</td>
+                            <td>{{ emp.deptName }}</td>
+                            <td>{{ emp.role }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

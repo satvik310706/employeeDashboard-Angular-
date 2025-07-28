@@ -1,0 +1,28 @@
+<div class="login-wrapper">
+    <div class="login-box">
+        <h2 class="login-title">Employee Login</h2>
+        <form class="login-form">
+            <label for="email" class="login-label">Email ID</label>
+            <input type="email" id="email" class="login-input" placeholder="Enter your email" name="email"
+                #uname="ngModel" [(ngModel)]="loginObj.emailId" required />
+            @if (uname.errors?.['required'] && uname.touched) {
+            <small class="text-danger">This is required</small>
+            }
+
+            <label for="password" class="login-label">Password</label>
+            <input type="password" id="password" class="login-input" placeholder="Enter your password" name="password"
+                #pas="ngModel" [(ngModel)]="loginObj.password" required />
+            @if (pas.errors?.['required'] && pas.touched) {
+            <small class="text-danger">This is required</small>
+            }
+
+            <button type="submit" (click)="login()" class="login-button">Login</button>
+        </form>
+
+        <div class="signup-redirect">
+            <span>Don't have an account?</span>
+            <a routerLink="/signin" class="signin-link">Sign In</a>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
