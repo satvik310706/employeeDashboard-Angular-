@@ -1,0 +1,8 @@
+<form>
+    <input name="username" type="text" [(ngModel)]="userData.username" placeholder="Username" />
+    <input name="password" type="password" [(ngModel)]="userData.password" placeholder="Password" />
+    <button type="submit" (click)="post()">Sign In</button>
+    <button (click)="logi()">Log In</button>
+</form>
+
+<!-- Place outside the form -->
