@@ -3,27 +3,30 @@ import { Employees } from '../services/employee';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { APIResponse, EmployeeDetails, New } from '../model/employee.model';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [CommonModule, FormsModule, AsyncPipe],
+  imports: [CommonModule, FormsModule, AsyncPipe, MatSnackBarModule],
   templateUrl: './employee.html',
   styleUrls: ['./employee.css']
 })
 export class Employee implements OnInit {
   search: string = '';
   showAddForm: boolean = false;
+
   master = inject(Employees);
   cdr = inject(ChangeDetectorRef);
+  snackBar = inject(MatSnackBar);
 
   emps: EmployeeDetails[] = [];
   emp: EmployeeDetails[] = [];
 
-  roleList$: Observable<any[]> = new Observable<any[]>;
-  depsList$: Observable<any[]> = new Observable<any[]>;
+  roleList$: Observable<any[]> = new Observable<any[]>();
+  depsList$: Observable<any[]> = new Observable<any[]>();
 
   newEmp: New = new New();
 
@@ -33,24 +36,25 @@ export class Employee implements OnInit {
   selectedGender: string = '';
 
   ngOnInit(): void {
-    this.get();
+    this.fetchAll();
     this.roleList$ = this.master.getroles();
     this.depsList$ = this.master.getdeps();
   }
 
-  get() {
+  fetchAll() {
     this.master.get().subscribe({
       next: (res: APIResponse) => {
         if (res.result) {
-          this.emps = [...res.data];
-          this.emp = [...res.data];
+          const deletedIds = JSON.parse(localStorage.getItem('deletedEmployees') || '[]');
+          this.emp = res.data.filter((emp: { employeeId: any; }) => !deletedIds.includes(emp.employeeId));
+          this.emps = [...this.emp];
           this.cdr.detectChanges();
         } else {
-          alert(res.message);
+          this.showToast(res.message, 'error');
         }
       },
       error: (err: any) => {
-        alert(err);
+        this.showToast(err.message, 'error');
       }
     });
   }
@@ -66,20 +70,18 @@ export class Employee implements OnInit {
   }
 
   submitForm() {
-    this.master.post(this.newEmp).pipe(
-      finalize(() => this.get())
-    ).subscribe({
+    this.master.post(this.newEmp).pipe(finalize(() => this.fetchAll())).subscribe({
       next: (res: any) => {
         if (res.result) {
-          alert("Employee created");
+          this.showToast("✅ Employee created", 'success');
           this.showAddForm = false;
           this.newEmp = new New();
         } else {
-          alert(res.message);
+          this.showToast(res.message, 'error');
         }
       },
       error: (err: any) => {
-        alert(err.message);
+        this.showToast(err.message, 'error');
       }
     });
   }
@@ -90,58 +92,67 @@ export class Employee implements OnInit {
   }
 
   put() {
-    this.master.put(this.newEmp).pipe(
-      finalize(() => this.get())
-    ).subscribe({
+    this.master.put(this.newEmp).pipe(finalize(() => this.fetchAll())).subscribe({
       next: (res: any) => {
         if (res.result) {
-          alert("Employee Updated");
+          this.showToast("✅ Employee Updated", 'success');
           this.showAddForm = false;
           this.newEmp = new New();
         } else {
-          alert(res.message);
+          this.showToast(res.message, 'error');
         }
       },
       error: (err: any) => {
-        alert(err.message);
+        this.showToast(err.message, 'error');
       }
     });
   }
-  delete(id: number) {
-    if (!confirm("Are you sure you want to delete?")) return;
 
-    this.master.delete(id).subscribe({
+  delete(id: number) {
+    if (!confirm("Are you sure you want to delete this employee?")) return;
+
+    let deletedIds = JSON.parse(localStorage.getItem('deletedEmployees') || '[]');
+    deletedIds.push(id);
+    localStorage.setItem('deletedEmployees', JSON.stringify(deletedIds));
+
+    this.master.delete(id).pipe(finalize(() => this.fetchAll())).subscribe({
       next: (res: any) => {
         if (res.result) {
-          this.emps = this.emps.filter(e => e.employeeId !== id);
-          this.emp = this.emp.filter(e => e.employeeId !== id);
-          this.cdr.detectChanges();
+          this.showToast("🗑️ Employee deleted", 'warn');
         } else {
-          this.emps = this.emps.filter(e => e.employeeId !== id);
-          this.emp = this.emp.filter(e => e.employeeId !== id);
-          this.cdr.detectChanges();
-          console.log(res.message)
+          this.showToast(res.message, 'error');
         }
       },
       error: (err: any) => {
-        this.emps = this.emps.filter(e => e.employeeId !== id);
-        this.emp = this.emp.filter(e => e.employeeId !== id);
-        this.cdr.detectChanges();
-        console.log(err.message)
+        this.showToast(err.message, 'error');
       }
     });
   }
 
+  // Clear deleted employees from localStorage (call this on logout)
+  clearDeletedCache() {
+    localStorage.removeItem('deletedEmployees');
+  }
 
-  // Get unique values for filter dropdowns
+  // Toast/snackbar alerts
+  showToast(message: string, type: 'success' | 'error' | 'warn' = 'success') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'success' ? 'snack-success' :
+        type === 'error' ? 'snack-error' :
+          'snack-warn'
+    });
+  }
+
+  // Filter dropdown logic
   get uniqueDepartments(): string[] {
     return Array.from(new Set(this.emp.map(e => e.deptName))).filter(Boolean);
   }
+
   get uniqueRoles(): string[] {
     return Array.from(new Set(this.emp.map(e => e.role))).filter(Boolean);
   }
 
-  // Apply all filters
   applyFilters() {
     const keyword = this.search.trim().toLowerCase();
     this.emps = this.emp.filter(e =>
@@ -151,7 +162,6 @@ export class Employee implements OnInit {
     );
   }
 
-  // Update filter on search
   filtr() {
     this.applyFilters();
   }

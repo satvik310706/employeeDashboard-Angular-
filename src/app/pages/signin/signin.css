@@ -129,3 +129,14 @@
     padding: 1.5rem;
   }
 }
+.snack-success {
+  background-color: #4ade80;
+  color: #064e3b;
+  font-weight: bold;
+}
+
+.snack-error {
+  background-color: #f87171;
+  color: #7f1d1d;
+  font-weight: bold;
+}

@@ -1,13 +1,19 @@
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lm',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
+  ],
   templateUrl: './lm.html',
   styleUrls: ['./lm.css']
 })
@@ -20,6 +26,7 @@ export class Lm implements OnInit {
 
   http = inject(HttpClient);
   cdr = inject(ChangeDetectorRef);
+  snack = inject(MatSnackBar);
 
   ngOnInit(): void {
     this.get();
@@ -34,13 +41,19 @@ export class Lm implements OnInit {
             status: leave.isApproved === true ? 'Approved' :
               leave.isApproved === false ? 'Rejected' : 'Pending'
           }));
-          this.leaveList = [...this.leaveList]; // Force refresh
-          this.cdr.detectChanges();             // Trigger UI update
+          this.leaveList = [...this.leaveList]; // Trigger refresh
+          this.cdr.detectChanges();
         } else {
-          alert("Couldn't fetch data: " + res.message);
+          this.snack.open("Couldn't fetch data: " + res.message, 'Close', {
+            duration: 3000,
+            panelClass: ['snack-error']
+          });
         }
       },
-      error: err => alert(err.message)
+      error: err => this.snack.open(err.message, 'Close', {
+        duration: 3000,
+        panelClass: ['snack-error']
+      })
     });
   }
 
@@ -49,13 +62,16 @@ export class Lm implements OnInit {
       .pipe(finalize(() => this.get()))
       .subscribe({
         next: (res: any) => {
-          if (res.result) {
-            alert("Approved");
-          } else {
-            alert(res.message);
-          }
+          const msg = res.result ? "✅ Leave Approved" : res.message;
+          this.snack.open(msg, 'Close', {
+            duration: 3000,
+            panelClass: res.result ? ['snack-success'] : ['snack-error']
+          });
         },
-        error: err => alert(err.message)
+        error: err => this.snack.open(err.message, 'Close', {
+          duration: 3000,
+          panelClass: ['snack-error']
+        })
       });
   }
 
@@ -64,13 +80,16 @@ export class Lm implements OnInit {
       .pipe(finalize(() => this.get()))
       .subscribe({
         next: (res: any) => {
-          if (res.result) {
-            alert("Rejected");
-          } else {
-            alert(res.message);
-          }
+          const msg = res.result ? "❌ Leave Rejected" : res.message;
+          this.snack.open(msg, 'Close', {
+            duration: 3000,
+            panelClass: res.result ? ['snack-danger'] : ['snack-error']
+          });
         },
-        error: err => alert(err.message)
+        error: err => this.snack.open(err.message, 'Close', {
+          duration: 3000,
+          panelClass: ['snack-error']
+        })
       });
   }
 
