@@ -16,8 +16,8 @@ export class Empl implements OnInit {
   http = inject(HttpClient);
   cdr = inject(ChangeDetectorRef);
 
-  emp: EmployeeDetails[] = [];   // filtered list
-  emps: EmployeeDetails[] = [];  // full list (original copy)
+  emp: EmployeeDetails[] = [];   
+  emps: EmployeeDetails[] = [];  
   search: string = '';
   selectedDept: string = '';
   selectedRole: string = '';
