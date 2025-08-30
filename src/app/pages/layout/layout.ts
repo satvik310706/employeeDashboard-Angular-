@@ -41,7 +41,7 @@ export class Layout implements OnInit {
 
   constructor() {
     this.readloggeddata();
-    // ✅ Prevent route reuse so same route re-triggers component init
+
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
